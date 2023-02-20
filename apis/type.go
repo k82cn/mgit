@@ -1,8 +1,14 @@
 package apis
 
 const (
-	ConfPathEnv = "MGIT_CONF"
+	ConfPathEnv     = "MGIT_CONF"
+	DefaultConfName = ".mgit"
 )
+
+type Configuration struct {
+	CurrentSolution string     `yaml:"current-solution"`
+	Solutions       []Solution `yaml:"solutions"`
+}
 
 type Solution struct {
 	Name       string      `yaml:"name"`
@@ -17,6 +23,6 @@ type Component struct {
 	User         *string `yaml:"user"`
 	GitPath      string  `yaml:"git_path"`
 	ModulePath   string  `yaml:"module_path"`
-	MainBranch   string  `yaml:"main_branch"`
+	MainBranch   *string `yaml:"main_branch"`
 	BuildCommand *string `yaml:"build_command"`
 }

@@ -1,4 +1,4 @@
-module github.com/klausm/mgit
+module github.com/k82cn/mgit
 
 go 1.19
 

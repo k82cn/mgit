@@ -1,0 +1,15 @@
+current-solution: openbce
+solutions:
+  - name: openbce
+    git_server: "git@github.com:"
+    user: k82cn
+    components:
+      - name: device-manager
+        git_path: openbce/device-manager
+        module_path: openbce.io/device-manager
+      - name: flame
+        git_path: openbce/flame
+        module_path: openbce.io/flame
+      - name: kcache
+        git_path: openbce/kcache
+        module_path: openbce.io/kcache

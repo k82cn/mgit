@@ -1,9 +1,0 @@
-name: forge
-git_server: ssh://git@gitlab-master.nvidia.com:12051
-components:
-  - name: carbide
-    git_path: nvmetal/carbide
-    module_path: forge/carbide
-  - name: vpc
-    git_path: nvmetal/vpc
-    module_path: forge/vpc
