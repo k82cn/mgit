@@ -19,7 +19,7 @@ var buildCmd = &cobra.Command{
 	Short: "Build the components accordingly",
 	Long:  `Build the components accordingly`,
 	Run: func(cmd *cobra.Command, args []string) {
-		solution, err := loadConfiguration()
+		solution, err := loadSolution()
 		if err != nil {
 			fmt.Printf("Failed to load configuration: %v\n", err)
 			os.Exit(1)

@@ -25,7 +25,7 @@ func getConfPath() (string, error) {
 	return confPath, nil
 }
 
-func loadConfiguration() (*apis.Solution, error) {
+func loadConfiguration() (*apis.Configuration, error) {
 	confPath, err := getConfPath()
 	if err != nil {
 		return nil, err
@@ -41,9 +41,18 @@ func loadConfiguration() (*apis.Solution, error) {
 		return nil, err
 	}
 
+	return res, nil
+}
+
+func loadSolution() (*apis.Solution, error) {
+	conf, err := loadConfiguration()
+	if err != nil {
+		return nil, err
+	}
+
 	var sol *apis.Solution
-	for _, s := range res.Solutions {
-		if res.CurrentSolution == s.Name {
+	for _, s := range conf.Solutions {
+		if conf.CurrentSolution == s.Name {
 			sol = &s
 			break
 		}

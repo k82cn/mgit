@@ -19,7 +19,7 @@ var updateCmd = &cobra.Command{
 	Short: "Update all related repositories in local",
 	Long:  `Update all related repositories in local`,
 	Run: func(cmd *cobra.Command, args []string) {
-		sol, err := loadConfiguration()
+		sol, err := loadSolution()
 		if err != nil {
 			fmt.Printf("Failed to load configuration: %v\n", err)
 			os.Exit(1)

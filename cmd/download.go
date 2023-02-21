@@ -25,7 +25,7 @@ var downloadCmd = &cobra.Command{
 	Short: "Download all related repositories of the solution",
 	Long:  `Download all related repositories of the solution`,
 	Run: func(cmd *cobra.Command, args []string) {
-		solution, err := loadConfiguration()
+		solution, err := loadSolution()
 		if err != nil {
 			fmt.Printf("Failed to load configuration: %v\n", err)
 			os.Exit(1)
