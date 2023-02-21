@@ -21,14 +21,14 @@ var listCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		fmt.Printf(" %-20s%-15s%-40s%-20s\n", "Name", "User", "GitServer", "Components#")
+		fmt.Printf("  %-15s%-15s%-60s%-20s\n", "Name", "User", "GitServer", "Components#")
 		for _, s := range conf.Solutions {
 			setDefault(&s)
 			p := " "
 			if s.Name == conf.CurrentSolution {
 				p = "*"
 			}
-			fmt.Printf("%s%-20s%-15s%-40s%-20d\n", p, s.Name, *s.User, s.GitServer, len(s.Components))
+			fmt.Printf("%s %-15s%-15s%-60s%-20d\n", p, s.Name, *s.User, s.GitServer, len(s.Components))
 		}
 	},
 }
