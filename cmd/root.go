@@ -17,22 +17,21 @@ var rootCmd = &cobra.Command{
 ${HOME}/.mgit by default, and the environment value ${MGIT_CONF} can also be used to set up the configuration.
 
     $ cat << EOF | tee ${HOME}/.mgit
-	current-solution: openbce
-	solutions:
-	  - name: openbce
-		git_server: "git@github.com:"
-		user: k82cn
-		components:
-		  - name: device-manager
-			git_path: openbce/device-manager
-			module_path: openbce.io/device-manager
-		  - name: flame
-			git_path: openbce/flame
-			module_path: openbce.io/flame
-		  - name: kcache
-			git_path: openbce/kcache
-			module_path: openbce.io/kcache
-
+    current-solution: openbce
+    solutions:
+      - name: openbce
+        git_server: "git@github.com:"
+        user: k82cn
+        components:
+          - name: device-manager
+            git_path: openbce/device-manager
+            module_path: openbce.io/device-manager
+          - name: flame
+            git_path: openbce/flame
+            module_path: openbce.io/flame
+          - name: kcache
+            git_path: openbce/kcache
+            module_path: openbce.io/kcache
 `,
 	// Run: func(cmd *cobra.Command, args []string) { },
 }

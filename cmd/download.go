@@ -48,7 +48,7 @@ var downloadCmd = &cobra.Command{
 				}
 			}
 
-			if err := os.MkdirAll(target, 0644); err != nil {
+			if err := os.MkdirAll(target, 0755); err != nil {
 				fmt.Printf("Failed to create directories: %v\n", err)
 				os.Exit(1)
 			}
