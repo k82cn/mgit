@@ -45,6 +45,7 @@ func loadConfiguration() (*apis.Solution, error) {
 	for _, s := range res.Solutions {
 		if res.CurrentSolution == s.Name {
 			sol = &s
+			break
 		}
 	}
 

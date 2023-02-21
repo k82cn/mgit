@@ -55,6 +55,14 @@ var updateCmd = &cobra.Command{
 				os.Exit(1)
 			}
 
+			pushCmd := exec.Command("git", "push")
+			pushCmd.Dir = target
+			if msg, err := pushCmd.CombinedOutput(); err != nil {
+				fmt.Println("Failed.")
+				fmt.Println(string(msg))
+				os.Exit(1)
+			}
+
 			fmt.Println("Done.")
 		}
 	},
