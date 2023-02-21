@@ -25,17 +25,17 @@ var downloadCmd = &cobra.Command{
 	Short: "Download all related repositories of the solution",
 	Long:  `Download all related repositories of the solution`,
 	Run: func(cmd *cobra.Command, args []string) {
-		sol, err := loadConfiguration()
+		solution, err := loadConfiguration()
 		if err != nil {
 			fmt.Printf("Failed to load configuration: %v\n", err)
 			os.Exit(1)
 		}
 
-		for _, repo := range sol.Components {
+		for _, repo := range solution.Components {
 			fmt.Printf("Start to download %s: ", repo.Name)
 
-			src := strings.Join([]string{sol.GitServer, *sol.User, repo.Name}, "/")
-			target := strings.Join([]string{*sol.GoPath, "src", repo.ModulePath}, string(filepath.Separator))
+			src := strings.Join([]string{solution.GitServer, *solution.User, repo.Name}, "/")
+			target := strings.Join([]string{*solution.GoPath, "src", repo.ModulePath}, string(filepath.Separator))
 			if _, err := os.Stat(target); err == nil {
 				if downloadCmdOpt.Force {
 					if err := os.RemoveAll(target); err != nil {
@@ -61,7 +61,7 @@ var downloadCmd = &cobra.Command{
 			}
 
 			cmd = exec.Command("git", "remote", "add", "upstream",
-				strings.Join([]string{sol.GitServer, repo.GitPath}, "/"))
+				strings.Join([]string{solution.GitServer, repo.GitPath}, "/"))
 			cmd.Dir = target
 			if msg, err := cmd.CombinedOutput(); err != nil {
 				fmt.Println("Failed.")

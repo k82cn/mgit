@@ -5,6 +5,10 @@ package cmd
 
 import (
 	"fmt"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"strings"
 
 	"github.com/spf13/cobra"
 )
@@ -12,15 +16,30 @@ import (
 // buildCmd represents the build command
 var buildCmd = &cobra.Command{
 	Use:   "build",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Build the components accordingly",
+	Long:  `Build the components accordingly`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("build called")
+		solution, err := loadConfiguration()
+		if err != nil {
+			fmt.Printf("Failed to load configuration: %v\n", err)
+			os.Exit(1)
+		}
+
+		for _, repo := range solution.Components {
+			fmt.Printf("Start to build %s: ", repo.Name)
+
+			target := strings.Join([]string{*solution.GoPath, "src", repo.ModulePath}, string(filepath.Separator))
+
+			cmd := exec.Command("/bin/bash", "-c", *repo.BuildCommand)
+			cmd.Dir = target
+			if msg, err := cmd.CombinedOutput(); err != nil {
+				fmt.Println("Failed.")
+				fmt.Println(string(msg))
+				os.Exit(1)
+			}
+
+			fmt.Println("Done.")
+		}
 	},
 }
 

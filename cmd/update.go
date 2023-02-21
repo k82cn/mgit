@@ -16,8 +16,8 @@ import (
 // updateCmd represents the update command
 var updateCmd = &cobra.Command{
 	Use:   "update",
-	Short: "Update Forge related repositories in local",
-	Long:  `Update Forge related repositories in local`,
+	Short: "Update all related repositories in local",
+	Long:  `Update all related repositories in local`,
 	Run: func(cmd *cobra.Command, args []string) {
 		sol, err := loadConfiguration()
 		if err != nil {

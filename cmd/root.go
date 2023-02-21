@@ -12,20 +12,31 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "mgit",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
+	Short: "The command lines to manage multiple repositories of solutions.",
+	Long: `The command lines to manage multiple repositories of solutions. It will load the configuration from
+${HOME}/.mgit by default, and the environment value ${MGIT_CONF} can also be used to set up the configuration.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
+    $ cat << EOF | tee ${HOME}/.mgit
+	current-solution: openbce
+	solutions:
+	  - name: openbce
+		git_server: "git@github.com:"
+		user: k82cn
+		components:
+		  - name: device-manager
+			git_path: openbce/device-manager
+			module_path: openbce.io/device-manager
+		  - name: flame
+			git_path: openbce/flame
+			module_path: openbce.io/flame
+		  - name: kcache
+			git_path: openbce/kcache
+			module_path: openbce.io/kcache
+
+`,
 	// Run: func(cmd *cobra.Command, args []string) { },
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {

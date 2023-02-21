@@ -76,6 +76,10 @@ func setDefault(res *apis.Solution) {
 		if res.Components[i].User == nil {
 			res.Components[i].User = res.User
 		}
+		if res.Components[i].BuildCommand == nil {
+			buildCommand := "make"
+			res.Components[i].BuildCommand = &buildCommand
+		}
 	}
 
 }
