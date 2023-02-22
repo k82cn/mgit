@@ -10,6 +10,8 @@ $ go install -a github.com/k82cn/mgit@latest
 
 ## Configuration
 
+The default configuration file is `$HOME/.mgit`, the following configuration demonstrate multiple solutions with multiple components.
+
 ```shell
 current-solution: openbce
 workspace: /home/k82cn/workspace
@@ -55,7 +57,7 @@ Start to update kcache: Done.
 
 ```shell
 $ mgit list
-  Name           User           GitServer                                                   Components#         
-  ray            k82cn          git@github.com:                                             1                   
-* openbce        k82cn          git@github.com:                                             3                                  
+  Name           User           GitServer                                    Components#         
+  ray            k82cn          git@github.com:                              1                   
+* openbce        k82cn          git@github.com:                              3                                  
 ```
