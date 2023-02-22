@@ -57,7 +57,7 @@ Start to update kcache: Done.
 
 ```shell
 $ mgit list
-  Name           User           GitServer                                    Components#         
-  ray            k82cn          git@github.com:                              1                   
-* openbce        k82cn          git@github.com:                              3                                  
+  Name           User           GitServer                          Components#         
+  ray            k82cn          git@github.com:                    1                   
+* openbce        k82cn          git@github.com:                    3                                  
 ```
