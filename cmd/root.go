@@ -1,6 +1,7 @@
 /*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
+Copyright © 2023 Klaus Ma <klaus@xflops.cn>
 */
+
 package cmd
 
 import (

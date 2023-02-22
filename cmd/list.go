@@ -1,12 +1,14 @@
 /*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
+Copyright © 2023 Klaus Ma <klaus@xflops.cn>
 */
+
 package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
 	"os"
+
+	"github.com/spf13/cobra"
 )
 
 // listCmd represents the build command
@@ -23,7 +25,7 @@ var listCmd = &cobra.Command{
 
 		fmt.Printf("  %-15s%-15s%-60s%-20s\n", "Name", "User", "GitServer", "Components#")
 		for _, s := range conf.Solutions {
-			setDefault(&s)
+			setDefault(&s, conf)
 			p := " "
 			if s.Name == conf.CurrentSolution {
 				p = "*"

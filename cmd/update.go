@@ -1,15 +1,16 @@
 /*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
+Copyright © 2023 Klaus Ma <klaus@xflops.cn>
 */
+
 package cmd
 
 import (
 	"fmt"
 	"os"
 	"os/exec"
-	"path/filepath"
 	"strings"
 
+	"github.com/k82cn/mgit/projects"
 	"github.com/spf13/cobra"
 )
 
@@ -27,9 +28,9 @@ var updateCmd = &cobra.Command{
 
 		for _, repo := range sol.Components {
 			fmt.Printf("Start to update %s: ", repo.Name)
+			project := projects.New(&repo)
 
-			target := strings.Join([]string{*sol.GoPath, "src", repo.ModulePath}, string(filepath.Separator))
-
+			target := project.Dir(*sol.Workspace)
 			checkoutCmd := exec.Command("git", "checkout", *repo.MainBranch)
 			checkoutCmd.Dir = target
 			if msg, err := checkoutCmd.CombinedOutput(); err != nil {
@@ -61,6 +62,16 @@ var updateCmd = &cobra.Command{
 				fmt.Println("Failed.")
 				fmt.Println(string(msg))
 				os.Exit(1)
+			}
+
+			for _, c := range project.PostUpdate() {
+				postCmd := exec.Command(c.Command, c.Arguments...)
+				postCmd.Dir = target
+				if msg, err := postCmd.CombinedOutput(); err != nil {
+					fmt.Println("Failed.")
+					fmt.Println(string(msg))
+					os.Exit(1)
+				}
 			}
 
 			fmt.Println("Done.")

@@ -1,16 +1,18 @@
 /*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
+Copyright © 2023 Klaus Ma <klaus@xflops.cn>
 */
+
 package cmd
 
 import (
 	"fmt"
 	"os"
 	"os/exec"
-	"path/filepath"
 	"strings"
 
 	"github.com/spf13/cobra"
+
+	"github.com/k82cn/mgit/projects"
 )
 
 type downloadCmdOption struct {
@@ -33,9 +35,10 @@ var downloadCmd = &cobra.Command{
 
 		for _, repo := range solution.Components {
 			fmt.Printf("Start to download %s: ", repo.Name)
+			project := projects.New(&repo)
 
 			src := strings.Join([]string{solution.GitServer, *solution.User, repo.Name}, "/")
-			target := strings.Join([]string{*solution.GoPath, "src", repo.ModulePath}, string(filepath.Separator))
+			target := project.Dir(*solution.Workspace)
 			if _, err := os.Stat(target); err == nil {
 				if downloadCmdOpt.Force {
 					if err := os.RemoveAll(target); err != nil {

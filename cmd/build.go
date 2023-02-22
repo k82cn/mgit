@@ -1,16 +1,17 @@
 /*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
+Copyright © 2023 Klaus Ma <klaus@xflops.cn>
 */
+
 package cmd
 
 import (
 	"fmt"
 	"os"
 	"os/exec"
-	"path/filepath"
-	"strings"
 
 	"github.com/spf13/cobra"
+
+	"github.com/k82cn/mgit/projects"
 )
 
 // buildCmd represents the build command
@@ -27,9 +28,9 @@ var buildCmd = &cobra.Command{
 
 		for _, repo := range solution.Components {
 			fmt.Printf("Start to build %s: ", repo.Name)
+			project := projects.New(&repo)
 
-			target := strings.Join([]string{*solution.GoPath, "src", repo.ModulePath}, string(filepath.Separator))
-
+			target := project.Dir(*solution.Workspace)
 			cmd := exec.Command("/bin/bash", "-c", *repo.BuildCommand)
 			cmd.Dir = target
 			if msg, err := cmd.CombinedOutput(); err != nil {

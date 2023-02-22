@@ -1,3 +1,7 @@
+/*
+Copyright © 2023 Klaus Ma <klaus@xflops.cn>
+*/
+
 package cmd
 
 import (
@@ -10,6 +14,7 @@ import (
 	yamlv3 "gopkg.in/yaml.v3"
 
 	"github.com/k82cn/mgit/apis"
+	"github.com/k82cn/mgit/projects"
 )
 
 func getConfPath() (string, error) {
@@ -62,20 +67,24 @@ func loadSolution() (*apis.Solution, error) {
 		return nil, fmt.Errorf("current solution not found")
 	}
 
-	setDefault(sol)
+	setDefault(sol, conf)
 
 	return sol, nil
 }
 
-func setDefault(res *apis.Solution) {
-	if res.GoPath == nil {
-		goPath := os.Getenv("GOPATH")
-		res.GoPath = &goPath
+func setDefault(res *apis.Solution, conf *apis.Configuration) {
+	if res.Workspace == nil {
+		res.Workspace = &conf.Workspace
 	}
 
 	if res.User == nil {
 		user := os.Getenv("USER")
 		res.User = &user
+	}
+
+	if res.Type == nil {
+		goproj := projects.GoProjectName
+		res.Type = &goproj
 	}
 
 	for i := range res.Components {
@@ -89,6 +98,9 @@ func setDefault(res *apis.Solution) {
 		if res.Components[i].BuildCommand == nil {
 			buildCommand := "make"
 			res.Components[i].BuildCommand = &buildCommand
+		}
+		if res.Components[i].Type == nil {
+			res.Components[i].Type = res.Type
 		}
 	}
 
