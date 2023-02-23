@@ -6,7 +6,6 @@ package cmd
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -36,7 +35,7 @@ func loadConfiguration() (*apis.Configuration, error) {
 		return nil, err
 	}
 
-	yamlFile, err := ioutil.ReadFile(confPath)
+	yamlFile, err := os.ReadFile(confPath)
 	if err != nil {
 		return nil, err
 	}
@@ -47,6 +46,25 @@ func loadConfiguration() (*apis.Configuration, error) {
 	}
 
 	return res, nil
+}
+
+func saveConfiguration(conf *apis.Configuration) error {
+	confPath, err := getConfPath()
+	if err != nil {
+		return err
+	}
+
+	data, err := yamlv3.Marshal(conf)
+	if err != nil {
+		return err
+	}
+
+	err = os.WriteFile(confPath, data, 0x644)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func loadSolution() (*apis.Solution, error) {
