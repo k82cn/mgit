@@ -10,26 +10,26 @@ const (
 )
 
 type Configuration struct {
-	CurrentSolution string     `yaml:"current-solution"`
-	Workspace       string     `yaml:"workspace"`
-	Solutions       []Solution `yaml:"solutions"`
+	CurrentSolution string     `yaml:"current-solution,omitempty"`
+	Workspace       string     `yaml:"workspace,omitempty"`
+	Solutions       []Solution `yaml:"solutions,omitempty"`
 }
 
 type Solution struct {
-	Name       string      `yaml:"name"`
-	Type       *string     `yaml:"type"`
-	GitServer  string      `yaml:"git_server"`
-	User       *string     `yaml:"user"`
-	Workspace  *string     `yaml:"workspace"`
-	Components []Component `yaml:"components"`
+	Name       string      `yaml:"name,omitempty"`
+	Type       *string     `yaml:"type,omitempty"`
+	GitServer  string      `yaml:"git_server,omitempty"`
+	User       *string     `yaml:"user,omitempty"`
+	Workspace  *string     `yaml:"workspace,omitempty"`
+	Components []Component `yaml:"components,omitempty"`
 }
 
 type Component struct {
-	Name         string  `yaml:"name"`
-	Type         *string `yaml:"type"`
-	User         *string `yaml:"user"`
-	GitPath      string  `yaml:"git_path"`
-	ModulePath   string  `yaml:"module_path"`
-	MainBranch   *string `yaml:"main_branch"`
-	BuildCommand *string `yaml:"build_command"`
+	Name         string  `yaml:"name,omitempty"`
+	Type         *string `yaml:"type,omitempty"`
+	User         *string `yaml:"user,omitempty"`
+	GitPath      string  `yaml:"git_path,omitempty"`
+	ModulePath   string  `yaml:"module_path,omitempty"`
+	MainBranch   *string `yaml:"main_branch,omitempty"`
+	BuildCommand *string `yaml:"build_command,omitempty"`
 }
