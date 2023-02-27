@@ -14,6 +14,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
+type updateOptions struct {
+	Component string
+}
+
+var updateOpts updateOptions
+
 // updateCmd represents the update command
 var updateCmd = &cobra.Command{
 	Use:   "update",
@@ -27,6 +33,12 @@ var updateCmd = &cobra.Command{
 		}
 
 		for _, repo := range sol.Components {
+			if len(updateOpts.Component) != 0 {
+				if repo.Name != updateOpts.Component {
+					continue
+				}
+			}
+
 			fmt.Printf("Start to update %s: ", repo.Name)
 			project := projects.New(&repo)
 
@@ -81,4 +93,6 @@ var updateCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(updateCmd)
+
+	updateCmd.Flags().StringVarP(&updateOpts.Component, "component", "c", "", "The component to update.")
 }
