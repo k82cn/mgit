@@ -5,10 +5,17 @@ Copyright © 2023 Klaus Ma <klaus@xflops.cn>
 package cmd
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+type rootOptions struct {
+	Version bool
+}
+
+var rootOpts rootOptions
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -34,7 +41,11 @@ ${HOME}/.mgit by default, and the environment value ${MGIT_CONF} can also be use
             git_path: openbce/kcache
             module_path: openbce.io/kcache
 `,
-	// Run: func(cmd *cobra.Command, args []string) { },
+	Run: func(cmd *cobra.Command, args []string) {
+		if rootOpts.Version {
+			fmt.Println("v0.1.4")
+		}
+	},
 }
 
 func Execute() {
@@ -45,4 +56,8 @@ func Execute() {
 }
 
 func init() {
+	rootCmd.Flags().BoolVarP(&rootOpts.Version, "version", "v", false, "get the version of mgit")
+	if rootCmd.Flag("version").Changed {
+		rootOpts.Version = true
+	}
 }
