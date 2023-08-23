@@ -15,6 +15,7 @@ import (
 )
 
 type updateOptions struct {
+	Force     bool
 	Component string
 }
 
@@ -43,6 +44,17 @@ var updateCmd = &cobra.Command{
 			project := projects.New(&repo)
 
 			target := project.Dir(*sol.Workspace)
+
+			if updateOpts.Force {
+				resetCmd := exec.Command("git", "reset", "--hard", "HEAD")
+				resetCmd.Dir = target
+				if msg, err := resetCmd.CombinedOutput(); err != nil {
+					fmt.Println("Failed.")
+					fmt.Println(string(msg))
+					os.Exit(1)
+				}
+			}
+
 			checkoutCmd := exec.Command("git", "checkout", *repo.MainBranch)
 			checkoutCmd.Dir = target
 			if msg, err := checkoutCmd.CombinedOutput(); err != nil {
@@ -94,5 +106,6 @@ var updateCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(updateCmd)
 
+	updateCmd.Flags().BoolVarP(&updateOpts.Force, "force", "f", false, "Update components forcefully.")
 	updateCmd.Flags().StringVarP(&updateOpts.Component, "component", "c", "", "The component to update.")
 }
