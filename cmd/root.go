@@ -43,7 +43,7 @@ ${HOME}/.mgit by default, and the environment value ${MGIT_CONF} can also be use
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		if rootOpts.Version {
-			fmt.Println("v0.1.4")
+			fmt.Println("v0.1.5")
 		}
 	},
 }
