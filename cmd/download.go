@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -37,9 +38,9 @@ var downloadCmd = &cobra.Command{
 			fmt.Printf("Start to download %s: ", repo.Name)
 			project := projects.New(&repo)
 
-			src := strings.Join([]string{solution.GitServer, *solution.User, repo.Name}, "/")
+			src := strings.Join([]string{solution.GitServer, *solution.User, repo.Name}, string(filepath.Separator))
 			target := project.Dir(*solution.Workspace)
-			if _, err := os.Stat(target); err == nil {
+			if _, err := os.Stat(target); err != nil {
 				if downloadCmdOpt.Force {
 					if err := os.RemoveAll(target); err != nil {
 						fmt.Println("Skipped.")
